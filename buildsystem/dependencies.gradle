@@ -21,6 +21,8 @@ ext {
     okHttpVersion = '2.5.0'
     androidAnnotationsVersion = '21.0.3'
     appcompat = '24.2.0'
+    retrofit = "2.0.0"
+    dagger = '2.0'
 
     //Testing
     robolectricVersion = '3.0'
@@ -41,5 +43,12 @@ ext {
             javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
             junit          : "junit:junit:${jUnitVersion}",
             appcompat      : "com.android.support:appcompat-v7:${appcompat}",
+            robolectric    : "org.robolectric:robolectric:${robolectricVersion}",
+            mockito        : "org.mockito:mockito-core:${mockitoVersion}",
+            retrofit       : "com.squareup.retrofit2:retrofit:${retrofit}",
+            retrofit_gson  : "com.squareup.retrofit2:converter-gson:${retrofit}",
+            retrofit_rxjava: "com.squareup.retrofit2:adapter-rxjava:${retrofit}",
+            dagger_compiler: "com.google.dagger:dagger-compiler:${dagger}",
+            dagger         : "com.google.dagger:dagger:${dagger}"
     ]
 }

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -26,5 +27,18 @@ dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile commonDependencies.appcompat
+    compile commonDependencies.retrofit
+    compile commonDependencies.retrofit_gson
+    compile commonDependencies.retrofit_rxjava
+    compile("com.squareup.retrofit2:converter-simplexml:$retrofit") {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
+    apt commonDependencies.dagger_compiler
+    compile commonDependencies.dagger
     testCompile commonDependencies.junit
+    testCompile commonDependencies.robolectric
+    testCompile commonDependencies.mockito
+
 }
