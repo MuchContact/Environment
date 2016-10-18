@@ -49,6 +49,6 @@ ext {
             retrofit_gson  : "com.squareup.retrofit2:converter-gson:${retrofit}",
             retrofit_rxjava: "com.squareup.retrofit2:adapter-rxjava:${retrofit}",
             dagger_compiler: "com.google.dagger:dagger-compiler:${dagger}",
-            dagger         : "com.google.dagger:dagger:${dagger}"
+            dagger         : "com.google.dagger:dagger:${dagger}",
     ]
 }

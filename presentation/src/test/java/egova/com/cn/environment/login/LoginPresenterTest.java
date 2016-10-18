@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 public class LoginPresenterTest {
 
     @Test
-    public void should_initial_presenter() throws Exception {
+    public void should_initial_and_then_login() throws Exception {
         LoginPresenter loginPresenter = new LoginPresenter();
         LoginView mockLoginView = mock(LoginView.class);
         loginPresenter.setView(mockLoginView);

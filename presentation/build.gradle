@@ -27,6 +27,7 @@ dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile commonDependencies.appcompat
+    compile commonDependencies.butterKnife
     compile commonDependencies.retrofit
     compile commonDependencies.retrofit_gson
     compile commonDependencies.retrofit_rxjava
