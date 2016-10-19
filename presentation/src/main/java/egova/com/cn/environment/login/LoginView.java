@@ -9,11 +9,10 @@ public interface LoginView {
 
     void showLoginProgress();
 
-    void showErrors();
+    void showErrors(String error);
 
     void dismissLoginProgress();
 
     void navigateToMainView();
 
-    void clickToLogin();
 }

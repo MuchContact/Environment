@@ -31,15 +31,20 @@ dependencies {
     compile commonDependencies.retrofit
     compile commonDependencies.retrofit_gson
     compile commonDependencies.retrofit_rxjava
+    compile commonDependencies.rxJava
+    compile commonDependencies.rxAndroid
     compile("com.squareup.retrofit2:converter-simplexml:$retrofit") {
         exclude module: 'stax'
         exclude module: 'stax-api'
         exclude module: 'xpp3'
     }
     apt commonDependencies.dagger_compiler
+    provided commonDependencies.javaxAnnotation
     compile commonDependencies.dagger
     testCompile commonDependencies.junit
     testCompile commonDependencies.robolectric
-    testCompile commonDependencies.mockito
+//    testCompile commonDependencies.mockito
+    testCompile commonDependencies.powerMock
+    testCompile commonDependencies.powerMock_mockito
 
 }

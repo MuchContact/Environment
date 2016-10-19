@@ -29,26 +29,29 @@ ext {
     jUnitVersion = '4.12'
     assertJVersion = '1.7.1'
     mockitoVersion = '1.9.5'
+    powerMock = '1.6.5'
     dexmakerVersion = '1.0'
     espressoVersion = '2.0'
     testingSupportLibVersion = '0.1'
 
     commonDependencies = [
-            daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
-            dagger         : "com.google.dagger:dagger:${daggerVersion}",
-            butterKnife    : "com.jakewharton:butterknife:${butterKnifeVersion}",
-            recyclerView   : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
-            rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
-            rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
-            javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-            junit          : "junit:junit:${jUnitVersion}",
-            appcompat      : "com.android.support:appcompat-v7:${appcompat}",
-            robolectric    : "org.robolectric:robolectric:${robolectricVersion}",
-            mockito        : "org.mockito:mockito-core:${mockitoVersion}",
-            retrofit       : "com.squareup.retrofit2:retrofit:${retrofit}",
-            retrofit_gson  : "com.squareup.retrofit2:converter-gson:${retrofit}",
-            retrofit_rxjava: "com.squareup.retrofit2:adapter-rxjava:${retrofit}",
-            dagger_compiler: "com.google.dagger:dagger-compiler:${dagger}",
-            dagger         : "com.google.dagger:dagger:${dagger}",
+            daggerCompiler   : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger           : "com.google.dagger:dagger:${daggerVersion}",
+            butterKnife      : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            recyclerView     : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+            rxJava           : "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid        : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation  : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            junit            : "junit:junit:${jUnitVersion}",
+            appcompat        : "com.android.support:appcompat-v7:${appcompat}",
+            robolectric      : "org.robolectric:robolectric:${robolectricVersion}",
+            mockito          : "org.mockito:mockito-core:${mockitoVersion}",
+            retrofit         : "com.squareup.retrofit2:retrofit:${retrofit}",
+            retrofit_gson    : "com.squareup.retrofit2:converter-gson:${retrofit}",
+            retrofit_rxjava  : "com.squareup.retrofit2:adapter-rxjava:${retrofit}",
+            dagger_compiler  : "com.google.dagger:dagger-compiler:${dagger}",
+            dagger           : "com.google.dagger:dagger:${dagger}",
+            powerMock        : "org.powermock:powermock-module-junit4:${powerMock}",
+            powerMock_mockito: "org.powermock:powermock-api-mockito:${powerMock}"
     ]
 }
