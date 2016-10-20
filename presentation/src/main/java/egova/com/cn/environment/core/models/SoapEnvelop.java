@@ -1,4 +1,4 @@
-package egova.com.cn.environment.models;
+package egova.com.cn.environment.core.models;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Namespace;
@@ -14,11 +14,15 @@ public class SoapEnvelop {
     @Element(name = "soapenv:Body", required = false)
     private SoapRequestBody body;
 
-    public SoapRequestBody getBody() {
-        return body;
+    public SoapEnvelop(String body) {
+        setBody(body);
     }
 
-    public void setBody(SoapRequestBody body) {
-        this.body = body;
+    public void setBody(String body) {
+        SoapData soapData = new SoapData();
+        soapData.setBody(body);
+        SoapRequestBody soapRequestBody = new SoapRequestBody();
+        soapRequestBody.setSoapData(soapData);
+        this.body = soapRequestBody;
     }
 }

@@ -41,9 +41,9 @@ dependencies {
     apt commonDependencies.dagger_compiler
     provided commonDependencies.javaxAnnotation
     compile commonDependencies.dagger
+    compile commonDependencies.commons_io
     testCompile commonDependencies.junit
     testCompile commonDependencies.robolectric
-//    testCompile commonDependencies.mockito
     testCompile commonDependencies.powerMock
     testCompile commonDependencies.powerMock_mockito
 

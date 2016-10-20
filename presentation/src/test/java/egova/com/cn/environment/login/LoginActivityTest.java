@@ -1,4 +1,4 @@
-package egova.com.cn.environment;
+package egova.com.cn.environment.login;
 
 import android.content.Intent;
 import android.widget.Button;
@@ -11,6 +11,10 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
+
+import egova.com.cn.environment.BuildConfig;
+import egova.com.cn.environment.MainActivity;
+import egova.com.cn.environment.R;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,5 +44,14 @@ public class LoginActivityTest {
         Intent nextActivity = instance.getNextStartedActivity();
         String className = nextActivity.getComponent().getClassName();
         assertThat(className, is(MainActivity.class.getName()));
+    }
+
+    @Test
+    public void should_login_failed_with_wrong_username() throws Exception {
+
+        username.setText("un_existing_username");
+        password.setText("fakepassword");
+        login.performClick();
+
     }
 }

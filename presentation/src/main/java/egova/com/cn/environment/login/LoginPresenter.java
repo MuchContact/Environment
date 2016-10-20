@@ -6,10 +6,8 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import egova.com.cn.environment.EgovaApi;
-import egova.com.cn.environment.models.SoapData;
-import egova.com.cn.environment.models.SoapEnvelop;
-import egova.com.cn.environment.models.SoapRequestBody;
+import egova.com.cn.environment.core.api.EgovaApi;
+import egova.com.cn.environment.core.models.SoapEnvelop;
 import egova.com.cn.environment.util.CommonResult;
 import egova.com.cn.environment.util.XmlResultProcessorNew;
 import okhttp3.ResponseBody;
@@ -85,12 +83,7 @@ public class LoginPresenter {
     @NonNull
     private SoapEnvelop getSoapEnvelop() {
         String body = "";
-        SoapData soapData = new SoapData();
-        soapData.setBody(body);
-        SoapRequestBody soapRequestBody = new SoapRequestBody();
-        soapRequestBody.setSoapData(soapData);
-        SoapEnvelop soapEnvelop = new SoapEnvelop();
-        soapEnvelop.setBody(soapRequestBody);
+        SoapEnvelop soapEnvelop = new SoapEnvelop(body);
         return soapEnvelop;
     }
 

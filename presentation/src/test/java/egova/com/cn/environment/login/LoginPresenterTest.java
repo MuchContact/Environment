@@ -8,8 +8,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import egova.com.cn.environment.EgovaApi;
-import egova.com.cn.environment.models.SoapEnvelop;
+import egova.com.cn.environment.core.api.EgovaApi;
+import egova.com.cn.environment.core.models.SoapEnvelop;
 import egova.com.cn.environment.util.CommonResult;
 import egova.com.cn.environment.util.XmlResultProcessorNew;
 import okhttp3.ResponseBody;
@@ -41,7 +41,7 @@ public class LoginPresenterTest {
     @Test
     public void should_initial_and_then_login() throws Exception {
         ResponseBody mockResponse = PowerMockito.mock(ResponseBody.class);
-        when(mockResponse.string()).thenReturn("<xml></xml>");
+        when(mockResponse.string()).thenReturn("");
         when(mockLoginService.request(any(SoapEnvelop.class))).thenReturn(Observable.just(mockResponse));
         when(mockResult.getErrorCode()).thenReturn(CommonResult.CODE_SUCCESS);
         when(mockXmlProcessor.convert(anyString())).thenReturn(mockResult);

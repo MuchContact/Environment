@@ -1,4 +1,4 @@
-package egova.com.cn.environment.models;
+package egova.com.cn.environment.core.models;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -7,10 +7,6 @@ import org.simpleframework.xml.Root;
 public class SoapData {
     @Element(name = "request", required = false)
     private String body;
-
-    public String getBody() {
-        return body;
-    }
 
     public void setBody(String body) {
         this.body = body;
