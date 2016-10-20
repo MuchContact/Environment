@@ -15,12 +15,13 @@ import org.robolectric.shadows.ShadowApplication;
 import egova.com.cn.environment.BuildConfig;
 import egova.com.cn.environment.MainActivity;
 import egova.com.cn.environment.R;
+import egova.com.cn.environment.TestApplication;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(constants = BuildConfig.class, sdk = 21, application = TestApplication.class)
 public class LoginActivityTest {
     private final LoginActivity loginActivity = Robolectric.setupActivity(LoginActivity.class);
     private EditText username;

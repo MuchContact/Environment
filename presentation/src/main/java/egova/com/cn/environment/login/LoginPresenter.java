@@ -8,11 +8,13 @@ import javax.inject.Inject;
 
 import egova.com.cn.environment.core.api.EgovaApi;
 import egova.com.cn.environment.core.models.SoapEnvelop;
+import egova.com.cn.environment.di.PerActivity;
 import egova.com.cn.environment.util.CommonResult;
 import egova.com.cn.environment.util.XmlResultProcessorNew;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
 
+@PerActivity
 public class LoginPresenter {
 
     private final EgovaApi loginService;

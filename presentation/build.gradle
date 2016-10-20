@@ -33,7 +33,7 @@ dependencies {
     compile commonDependencies.retrofit_rxjava
     compile commonDependencies.rxJava
     compile commonDependencies.rxAndroid
-    compile("com.squareup.retrofit2:converter-simplexml:$retrofit") {
+    compile(commonDependencies.retrofit_xml) {
         exclude module: 'stax'
         exclude module: 'stax-api'
         exclude module: 'xpp3'
@@ -43,6 +43,7 @@ dependencies {
     compile commonDependencies.dagger
     compile commonDependencies.commons_io
     compile commonDependencies.stetho
+    compile commonDependencies.stetho_okhttp
     testCompile commonDependencies.junit
     testCompile commonDependencies.robolectric
     testCompile commonDependencies.powerMock

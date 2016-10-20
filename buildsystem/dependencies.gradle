@@ -48,6 +48,7 @@ ext {
             mockito          : "org.mockito:mockito-core:${mockitoVersion}",
             retrofit         : "com.squareup.retrofit2:retrofit:${retrofit}",
             retrofit_gson    : "com.squareup.retrofit2:converter-gson:${retrofit}",
+            retrofit_xml     : "com.squareup.retrofit2:converter-simplexml:${retrofit}",
             retrofit_rxjava  : "com.squareup.retrofit2:adapter-rxjava:${retrofit}",
             dagger_compiler  : "com.google.dagger:dagger-compiler:${dagger}",
             dagger           : "com.google.dagger:dagger:${dagger}",
@@ -55,6 +56,7 @@ ext {
             powerMock_mockito: "org.powermock:powermock-api-mockito:${powerMock}",
             commons_io       : "org.apache.commons:commons-io:1.3.2",
             commons_lang     : "org.apache.commons:commons-lang3:3.5",
-            stetho           : "com.facebook.stetho:stetho:1.4.1"
+            stetho           : "com.facebook.stetho:stetho:1.4.1",
+            stetho_okhttp    : "com.facebook.stetho:stetho-okhttp3:1.4.1"
     ]
 }
