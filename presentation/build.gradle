@@ -42,6 +42,7 @@ dependencies {
     provided commonDependencies.javaxAnnotation
     compile commonDependencies.dagger
     compile commonDependencies.commons_io
+    compile commonDependencies.stetho
     testCompile commonDependencies.junit
     testCompile commonDependencies.robolectric
     testCompile commonDependencies.powerMock
