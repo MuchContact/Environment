@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import egova.com.cn.environment.core.models.SoapEnvelop;
+import egova.com.cn.environment.core.models.SoapResponse;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 import okio.Buffer;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -63,14 +63,10 @@ public class EgovaApiTest {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         EgovaApi egovaApi = retrofit.create(EgovaApi.class);
-        egovaApi.request(getSoapEnvelop("login_request.xml")).subscribe(new Action1<ResponseBody>() {
+        egovaApi.request(getSoapEnvelop("login_request.xml")).subscribe(new Action1<SoapResponse>() {
             @Override
-            public void call(ResponseBody responseBody) {
-                try {
-                    assertThat(responseBody.string(), not(nullValue()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void call(SoapResponse responseBody) {
+                assertThat(responseBody.getBody(), not(nullValue()));
             }
         });
     }

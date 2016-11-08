@@ -42,6 +42,7 @@ dependencies {
     provided commonDependencies.javaxAnnotation
     compile commonDependencies.dagger
     compile commonDependencies.commons_io
+    compile commonDependencies.commons_lang
     compile commonDependencies.stetho
     compile commonDependencies.stetho_okhttp
     testCompile commonDependencies.junit

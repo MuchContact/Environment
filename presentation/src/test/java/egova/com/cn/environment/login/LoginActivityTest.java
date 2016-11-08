@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -16,6 +17,12 @@ import egova.com.cn.environment.BuildConfig;
 import egova.com.cn.environment.MainActivity;
 import egova.com.cn.environment.R;
 import egova.com.cn.environment.TestApplication;
+import rx.Scheduler;
+import rx.android.plugins.RxAndroidPlugins;
+import rx.android.plugins.RxAndroidSchedulersHook;
+import rx.plugins.RxJavaPlugins;
+import rx.plugins.RxJavaSchedulersHook;
+import rx.schedulers.Schedulers;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,6 +34,23 @@ public class LoginActivityTest {
     private EditText username;
     private EditText password;
     private Button login;
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        RxJavaPlugins.getInstance().registerSchedulersHook(new RxJavaSchedulersHook() {
+            @Override
+            public Scheduler getIOScheduler() {
+                return Schedulers.immediate();
+            }
+        });
+        RxAndroidPlugins.getInstance().registerSchedulersHook(new RxAndroidSchedulersHook() {
+            @Override
+            public Scheduler getMainThreadScheduler() {
+                return Schedulers.immediate();
+            }
+        });
+    }
+
     @Before
     public void setUp() throws Exception {
         username = loginActivity.username;
@@ -37,8 +61,8 @@ public class LoginActivityTest {
     @Test
     public void should_login_with_right_auth_info() throws Exception {
 
-        username.setText("muco");
-        password.setText("right_password");
+        username.setText("fltest");
+        password.setText("");
         login.performClick();
 
         ShadowApplication instance = ShadowApplication.getInstance();
@@ -47,12 +71,4 @@ public class LoginActivityTest {
         assertThat(className, is(MainActivity.class.getName()));
     }
 
-    @Test
-    public void should_login_failed_with_wrong_username() throws Exception {
-
-        username.setText("un_existing_username");
-        password.setText("fakepassword");
-        login.performClick();
-
-    }
 }

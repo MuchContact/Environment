@@ -20,7 +20,9 @@ public class TestApplicationModule extends ApplicationModule {
     public OkHttpClient provideOkHttpClient() {
         return new OkHttpClient.Builder()
                 .addNetworkInterceptor(new StethoInterceptor())
-                .addInterceptor(new MockInterceptor(new File(getClass().getResource("/xml/login_response.xml").getFile()), getResponseBuilder(200)))
+                .addInterceptor(new MockInterceptor(getResponseBuilder(200),
+                        new File(getClass().getResource("/xml/login_response_userid_not_found_error.xml").getFile()),
+                        new File(getClass().getResource("/xml/login_response.xml").getFile())))
                 .build();
     }
 

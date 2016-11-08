@@ -1,6 +1,9 @@
 package egova.com.cn.environment;
 
+import android.support.annotation.NonNull;
+
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +15,11 @@ import okhttp3.ResponseBody;
 
 public class MockInterceptor implements Interceptor {
     private final Response.Builder builder;
-    private File responseFile;
+    private File[] responseFiles;
+    private int index = 0;
 
-    public MockInterceptor(File fileFullPath, Response.Builder builder) {
-        this.responseFile = fileFullPath;
+    public MockInterceptor(Response.Builder builder, File... fileFullPath) {
+        this.responseFiles = fileFullPath;
         this.builder = builder;
     }
 
@@ -31,14 +35,23 @@ public class MockInterceptor implements Interceptor {
 
     /**
      * 读文件获取json字符串，生成ResponseBody
-     *
+     * 每次请求返回值不同,第n次网络请求返回responseFiles中第n或者最后一个文件的内容
      * @return
      */
     private String createResponseBody() throws IOException {
-        return getResponseString();
+        File responseFile;
+        if (index < responseFiles.length)
+            responseFile = responseFiles[index++];
+        else
+            responseFile = responseFiles[responseFiles.length-1];
+        String encodedBody = StringEscapeUtils.escapeXml11(FileUtils.readFileToString(responseFile, "UTF-8"));
+        String soapWrapper = FileUtils.readFileToString(getTemplateFileForSoapResponse(), "UTF-8");
+        return String.format(soapWrapper, encodedBody);
     }
 
-    private String getResponseString() throws IOException {
-        return FileUtils.readFileToString(responseFile, "UTF-8");
+    @NonNull
+    private File getTemplateFileForSoapResponse() {
+        return new File(getClass().getResource("/xml/soap_response_wrapper.xml").getFile());
     }
+
 }

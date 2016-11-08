@@ -1,0 +1,1 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:processResponse xmlns:ns2="http://inspect.mi.egova.com.cn/"><return>%s</return></ns2:processResponse></soap:Body></soap:Envelope>
