@@ -59,10 +59,10 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void should_login_with_right_auth_info() throws Exception {
+    public void should_login_with_valid_auth_info() throws Exception {
 
-        username.setText("fltest");
-        password.setText("");
+        username.setText("valid_user");
+        password.setText("valid_password");
         login.performClick();
 
         ShadowApplication instance = ShadowApplication.getInstance();
