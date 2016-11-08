@@ -1,1 +1,12 @@
-<?xml version='1.0' encoding='gb2312'?><request><product name='68'/><function name='humanLogin_ZX'/><params><userID>607</userID><userName>史大平</userName><password>dc82d632c9fcecb0778afbc7924494a6</password><startNum>0</startNum><endNum>0</endNum></params></request>
+<?xml version='1.0' encoding='gb2312'?>
+<request>
+    <product name='68' />
+    <function name='humanLogin_ZX' />
+    <params>
+        <userID>607</userID>
+        <userName>史大平</userName>
+        <password>dc82d632c9fcecb0778afbc7924494a6</password>
+        <startNum>0</startNum>
+        <endNum>0</endNum>
+    </params>
+</request>
