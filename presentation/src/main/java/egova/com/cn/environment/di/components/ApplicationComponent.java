@@ -1,5 +1,7 @@
 package egova.com.cn.environment.di.components;
 
+import android.app.Application;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -13,5 +15,6 @@ import retrofit2.Retrofit;
 public interface ApplicationComponent {
     Retrofit retrofit();
     EgovaApi egovaApi();
+    Application application();
     XmlResultProcessorNew processorXmlProcessor();
 }

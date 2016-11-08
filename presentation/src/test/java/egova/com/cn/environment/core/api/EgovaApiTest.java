@@ -38,7 +38,7 @@ public class EgovaApiTest {
             return response;
         }
 
-        private String bodyToString(final Request request){
+        private String bodyToString(final Request request) {
             try {
                 final Request copy = request.newBuilder().build();
                 final Buffer buffer = new Buffer();

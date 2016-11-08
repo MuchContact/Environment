@@ -6,7 +6,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.io.File;
 
-import egova.com.cn.environment.MockInterceptor;
+import egova.com.cn.environment.util.MockInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import okhttp3.Response;

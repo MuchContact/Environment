@@ -134,6 +134,7 @@ public class LoginPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+
     }
 
     @NonNull

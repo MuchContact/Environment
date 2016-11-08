@@ -1,4 +1,4 @@
-package egova.com.cn.environment;
+package egova.com.cn.environment.util;
 
 import android.support.annotation.NonNull;
 
@@ -36,6 +36,7 @@ public class MockInterceptor implements Interceptor {
     /**
      * 读文件获取json字符串，生成ResponseBody
      * 每次请求返回值不同,第n次网络请求返回responseFiles中第n或者最后一个文件的内容
+     *
      * @return
      */
     private String createResponseBody() throws IOException {
@@ -43,7 +44,7 @@ public class MockInterceptor implements Interceptor {
         if (index < responseFiles.length)
             responseFile = responseFiles[index++];
         else
-            responseFile = responseFiles[responseFiles.length-1];
+            responseFile = responseFiles[responseFiles.length - 1];
         String encodedBody = StringEscapeUtils.escapeXml11(FileUtils.readFileToString(responseFile, "UTF-8"));
         String soapWrapper = FileUtils.readFileToString(getTemplateFileForSoapResponse(), "UTF-8");
         return String.format(soapWrapper, encodedBody);
