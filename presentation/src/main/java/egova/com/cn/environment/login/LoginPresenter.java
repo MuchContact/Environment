@@ -2,17 +2,25 @@ package egova.com.cn.environment.login;
 
 import android.support.annotation.NonNull;
 
-import java.io.IOException;
-
 import javax.inject.Inject;
 
 import egova.com.cn.environment.core.api.EgovaApi;
 import egova.com.cn.environment.core.models.SoapEnvelop;
+import egova.com.cn.environment.core.models.SoapResponse;
 import egova.com.cn.environment.di.PerActivity;
 import egova.com.cn.environment.util.CommonResult;
+import egova.com.cn.environment.util.MD5;
+import egova.com.cn.environment.util.RequestParam;
+import egova.com.cn.environment.util.RequestParam2Xml;
 import egova.com.cn.environment.util.XmlResultProcessorNew;
-import okhttp3.ResponseBody;
+import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+
+import static java.lang.Integer.valueOf;
 
 @PerActivity
 public class LoginPresenter {
@@ -27,35 +35,30 @@ public class LoginPresenter {
         this.xmlProcessor = xmlProcessor;
     }
 
-    private final Subscriber<ResponseBody> subscriber = new Subscriber<ResponseBody>() {
+    private final Subscriber<SoapResponse> subscriber = new Subscriber<SoapResponse>() {
         @Override
         public void onCompleted() {
-            System.out.println("complete");
             view.dismissLoginProgress();
         }
 
         @Override
         public void onError(Throwable e) {
-            view.showErrors(e.getMessage());
+            view.showErrors(e.getLocalizedMessage());
             view.dismissLoginProgress();
         }
 
         @Override
-        public void onNext(ResponseBody responseBody) {
-            try {
-                String response = responseBody.string();
-                CommonResult result = xmlProcessor.convert(response);
-                if(result == null) {
-                    view.showErrors("handle failed for response:" + response);
-                    return;
-                }
-                if (result.getErrorCode() == CommonResult.CODE_SUCCESS) {
-                    view.navigateToMainView();
-                }else{
-                    view.showErrors(result.getErrorDesc());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        public void onNext(SoapResponse responseBody) {
+            String response = responseBody.getBody();
+            CommonResult result = xmlProcessor.convert(response);
+            if (result == null) {
+                view.showErrors("handle failed for response:" + response);
+                return;
+            }
+            if (result.getErrorCode() == CommonResult.CODE_SUCCESS) {
+                view.navigateToMainView();
+            } else {
+                view.showErrors(result.getErrorDesc());
             }
         }
     };
@@ -70,21 +73,72 @@ public class LoginPresenter {
         view.hideErrors();
     }
 
+    final int[] userID = {-1};
+
     public void doLogin() {
-        String username = view.getUsername();
-        String password = view.getPassword();
-        check(username, password);
+        final RequestParam rp = new RequestParam("mobile/sys/login");
+
         view.hideErrors();
         view.showLoginProgress();
-        loginService.request(getSoapEnvelop())
-//                .subscribeOn(Schedulers.io()io)
-//                .observeOn(AndroidSchedulers.mainThread())
+        Observable.just(null)
+                .flatMap(new Func1<Object, Observable<SoapResponse>>() {
+                    @Override
+                    public Observable<SoapResponse> call(Object o) {
+                        String username = view.getUsername();
+                        String password = view.getPassword();
+                        String strPassword = MD5.encrypt("" + userID[0], password);
+                        check(username, password);
+                        rp.functionName = "humanLogin_ZX";
+                        rp.paramMap.put("userID", "" + userID[0]);
+                        rp.paramMap.put("userName", username);
+                        rp.paramMap.put("password", strPassword);
+                        return userID[0] == -1 ?
+                                Observable.<SoapResponse>error(new NullPointerException("user id not defined")) :
+                                loginService.request(getSoapEnvelop(rp));
+                    }
+                })
+                .retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
+                    @Override
+                    public Observable<?> call(Observable<? extends Throwable> observable) {
+                        return observable.flatMap(new Func1<Throwable, Observable<?>>() {
+                            @Override
+                            public Observable<?> call(Throwable throwable) {
+                                if (throwable instanceof NullPointerException) {
+                                    return loginService.request(getSoapEnvelop(rp))
+                                            .doOnNext(new Action1<SoapResponse>() {
+                                                @Override
+                                                public void call(SoapResponse responseBody) {
+                                                    String response = null;
+                                                    try {
+                                                        response = responseBody.getBody();
+                                                        CommonResult result = xmlProcessor.convert(response);
+                                                        if (result == null) {
+                                                            throw new RuntimeException("handle failed for response:" + response);
+                                                        }
+                                                        if (result.getErrorCode() == LoginResponseCode.ERR_CODE_USER_ID) {
+                                                            userID[0] = valueOf(result.getErrorDesc().trim());
+                                                        } else {
+                                                            throw new RuntimeException(result.getErrorDesc());
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        throw new RuntimeException("Bad response format");
+                                                    }
+                                                }
+                                            });
+                                }
+                                return Observable.error(throwable);
+                            }
+                        });
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 
     @NonNull
-    private SoapEnvelop getSoapEnvelop() {
-        String body = "";
+    private SoapEnvelop getSoapEnvelop(RequestParam rp) {
+        String body = new RequestParam2Xml().getRequestXml(rp);
         SoapEnvelop soapEnvelop = new SoapEnvelop(body);
         return soapEnvelop;
     }
