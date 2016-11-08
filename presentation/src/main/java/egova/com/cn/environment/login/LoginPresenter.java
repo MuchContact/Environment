@@ -1,9 +1,12 @@
 package egova.com.cn.environment.login;
 
+import android.app.Application;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
+import egova.com.cn.environment.R;
 import egova.com.cn.environment.core.api.EgovaApi;
 import egova.com.cn.environment.core.models.SoapEnvelop;
 import egova.com.cn.environment.core.models.SoapResponse;
@@ -29,10 +32,13 @@ public class LoginPresenter {
 
     private final XmlResultProcessorNew xmlProcessor;
 
+    private final Context context;
+
     @Inject
-    public LoginPresenter(EgovaApi loginService, XmlResultProcessorNew xmlProcessor) {
+    public LoginPresenter(EgovaApi loginService, XmlResultProcessorNew xmlProcessor, Application application) {
         this.loginService = loginService;
         this.xmlProcessor = xmlProcessor;
+        this.context = application.getApplicationContext();
     }
 
     private final Subscriber<SoapResponse> subscriber = new Subscriber<SoapResponse>() {
@@ -93,7 +99,7 @@ public class LoginPresenter {
                         rp.paramMap.put("userName", username);
                         rp.paramMap.put("password", strPassword);
                         return userID[0] == -1 ?
-                                Observable.<SoapResponse>error(new NullPointerException("user id not defined")) :
+                                Observable.<SoapResponse>error(new NullPointerException(context.getString(R.string.user_id_not_defined))) :
                                 loginService.request(getSoapEnvelop(rp));
                     }
                 })
@@ -113,7 +119,7 @@ public class LoginPresenter {
                                                         response = responseBody.getBody();
                                                         CommonResult result = xmlProcessor.convert(response);
                                                         if (result == null) {
-                                                            throw new RuntimeException("handle failed for response:" + response);
+                                                            throw new RuntimeException(context.getString(R.string.error_msg_header) + response);
                                                         }
                                                         if (result.getErrorCode() == LoginResponseCode.ERR_CODE_USER_ID) {
                                                             userID[0] = valueOf(result.getErrorDesc().trim());
@@ -121,7 +127,7 @@ public class LoginPresenter {
                                                             throw new RuntimeException(result.getErrorDesc());
                                                         }
                                                     } catch (NumberFormatException e) {
-                                                        throw new RuntimeException("Bad response format");
+                                                        throw new RuntimeException(context.getString(R.string.number_format_error));
                                                     }
                                                 }
                                             });

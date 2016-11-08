@@ -3,4 +3,7 @@
     <string name="username">用户名</string>
     <string name="password">密码</string>
     <string name="login">登录</string>
+    <string name="user_id_not_defined">用户ID无效</string>
+    <string name="error_msg_header">返回值异常:</string>
+    <string name="number_format_error">返回值非有效数字</string>
 </resources>

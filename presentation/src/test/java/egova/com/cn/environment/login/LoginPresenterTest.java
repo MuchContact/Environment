@@ -1,11 +1,13 @@
 package egova.com.cn.environment.login;
 
+import android.app.Application;
+import android.content.Context;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -26,6 +28,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
@@ -63,7 +66,7 @@ public class LoginPresenterTest {
 
     @Test
     public void should_initial_and_then_login() throws Exception {
-        SoapResponse mockResponse = PowerMockito.mock(SoapResponse.class);
+        SoapResponse mockResponse = mock(SoapResponse.class);
         when(mockResponse.getBody()).thenReturn("");
         when(mockLoginService.request(any(SoapEnvelop.class))).thenReturn(
                 Observable.just(mockResponse));
@@ -71,7 +74,12 @@ public class LoginPresenterTest {
         when(mockResult.getErrorDesc()).thenReturn("667", "");
         when(mockXmlProcessor.convert(anyString())).thenReturn(mockResult);
 
-        LoginPresenter loginPresenter = new LoginPresenter(mockLoginService, mockXmlProcessor);
+        Application mockApplication = mock(Application.class);
+        Context mockContext = mock(Context.class);
+        when(mockApplication.getApplicationContext()).thenReturn(mockContext);
+        when(mockContext.getString(any(Integer.class))).thenReturn("");
+
+        LoginPresenter loginPresenter = new LoginPresenter(mockLoginService, mockXmlProcessor, mockApplication);
         loginPresenter.setView(mockLoginView);
         loginPresenter.initialize();
         verify(mockLoginView).hideErrors();
